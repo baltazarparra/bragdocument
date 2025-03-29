@@ -1,72 +1,73 @@
 # 📄 Bragdocument
 
-**Bragdocument** is a minimal webapp that renders Brag Documents from the Bragfy Telegram bot.
+**Bragdocument** é uma aplicação web minimalista que renderiza Brag Documents do bot Bragfy para Telegram.
 
-Built with **Next.js 14** using the App Router and powered by the **Vibe Coding** methodology.
-
----
-
-## ✨ Features
-
-- Static viewer for public brag documents
-- Landing page with product info
-- Receives brag data via API from Telegram bot
-- Notifies the bot when the page is ready
-- Secure, fast, and zero-database
+Construído com **Next.js 14** utilizando o App Router e seguindo a metodologia **Vibe Coding**.
 
 ---
 
-## 📦 Tech Stack
+## ✨ Funcionalidades
+
+- Visualizador estático para brag documents públicos
+- Página inicial com informações do produto
+- Recebe dados de brag via API do bot do Telegram
+- Notifica o bot quando a página está pronta
+- Seguro, rápido e sem banco de dados
+
+---
+
+## 📦 Stack Tecnológica
 
 - Next.js 14 (App Router)
 - TypeScript
-- Markdown rendering with sanitation
-- File-based storage via `/brags/*.json`
-- Deployed on Vercel
+- Renderização de Markdown com sanitização
+- Armazenamento baseado em arquivos via `/public/brags/*.json`
+- Implantado na Vercel
 
 ---
 
-## 🧠 Brag Document Flow
+## 🧠 Fluxo do Brag Document
 
-1. A user interacts with the Bragfy bot on Telegram
-2. The bot generates a Brag Document in Markdown
-3. It sends a `POST` to `/api/build` with the content
-4. The webapp saves it as `/brags/{userId}.json`
-5. The user can view their page at `/user/{userId}`
-6. The webapp sends a `POST /api/link-ready` to notify the bot
-7. The bot sends the link to the user
+1. Um usuário interage com o bot Bragfy no Telegram
+2. O bot gera um Brag Document em Markdown
+3. Ele envia um `POST` para `/api/build` com o conteúdo
+4. A aplicação web salva como `/public/brags/{userId}.json`
+5. O usuário pode visualizar sua página em `/user/{userId}`
+6. A aplicação web envia um `POST /api/link-ready` para notificar o bot
+7. O bot envia o link para o usuário
 
 ---
 
-## 🚀 Project Structure
+## 🚀 Estrutura do Projeto
 
 ```
 /app
-  page.tsx                   ← Landing page
-  /user/[id]/page.tsx        ← Brag viewer
-  /api/build/route.ts        ← Accepts JSON brag from bot
-  /api/link-ready/route.ts   ← Notifies bot via webhook
-/brags
-  123456789.json             ← Brag files by Telegram userId
+  page.tsx                   ← Página inicial
+  not-found.tsx              ← Página 404 personalizada
+  /user/[id]/page.tsx        ← Visualizador de Brag
+  /api/build/route.ts        ← Aceita JSON brag do bot
+  /api/link-ready/route.ts   ← Notifica o bot via webhook
+/lib
+  bragUtils.ts               ← Utilitários para manipulação de brags
 /public
-  favicon.ico
-  social-banner.png
+  /brags
+    123456789.json           ← Arquivos Brag por userId do Telegram
 ```
 
 ---
 
-## 📥 API Endpoints
+## 📥 Endpoints da API
 
 ### `POST /api/build`
 
-Receive a Brag Document.
+Recebe um Brag Document.
 
-**Body:**
+**Corpo:**
 
 ```json
 {
   "userId": 123456789,
-  "markdown": "# My week",
+  "markdown": "# Minha semana",
   "period": "7d",
   "timestamp": "2025-03-29T12:00:00Z"
 }
@@ -76,9 +77,9 @@ Receive a Brag Document.
 
 ### `POST /api/link-ready`
 
-Notify the bot that a link is ready.
+Notifica o bot que um link está pronto.
 
-**Body:**
+**Corpo:**
 
 ```json
 {
@@ -89,6 +90,24 @@ Notify the bot that a link is ready.
 
 ---
 
-## 📄 License
+## 🚀 Como executar
+
+```bash
+# Instalar dependências
+npm install
+
+# Executar em modo de desenvolvimento
+npm run dev
+
+# Construir para produção
+npm run build
+
+# Executar em modo de produção
+npm start
+```
+
+---
+
+## 📄 Licença
 
 MIT

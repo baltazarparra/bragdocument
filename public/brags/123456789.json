@@ -1,0 +1,6 @@
+{
+  "userId": 123456789,
+  "markdown": "# Meu Brag Document da Semana\n\n## Coisas que realizei\n\n- Implementei uma nova feature no projeto principal\n- Consertei 3 bugs críticos relatados por usuários\n- Melhorei a performance do carregamento da página inicial em 30%\n- Criei documentação para a API interna\n\n## Aprendizados\n\n- Aprendi mais sobre otimização de performance em React\n- Estudei mais sobre os padrões de design do sistema\n- Participei de um workshop sobre acessibilidade\n\n## Desafios\n\n- Estou tendo dificuldade com o novo sistema de CI/CD\n- Preciso encontrar tempo para refatorar o módulo de autenticação\n\n## Próximos passos\n\n- Finalizar o redesign da tela de perfil\n- Começar a implementação da nova API\n- Planejar a migração para o novo banco de dados",
+  "period": "7d",
+  "timestamp": "2023-10-10T12:00:00Z"
+}
