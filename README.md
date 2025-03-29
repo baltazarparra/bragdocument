@@ -4,12 +4,15 @@
 
 Construído com **Next.js 14** utilizando o App Router e seguindo a metodologia **Vibe Coding**.
 
+**Produção:** [https://bragdocument.vercel.app](https://bragdocument.vercel.app)
+
 ---
 
 ## ✨ Funcionalidades
 
+- Landing page moderna e minimalista inspirada no [resend.com](https://resend.com)
 - Visualizador estático para brag documents públicos
-- Página inicial com informações do produto
+- Design responsivo com animações sutis
 - Recebe dados de brag via API do bot do Telegram
 - Notifica o bot quando a página está pronta
 - Seguro, rápido e sem banco de dados
@@ -20,6 +23,7 @@ Construído com **Next.js 14** utilizando o App Router e seguindo a metodologia 
 
 - Next.js 14 (App Router)
 - TypeScript
+- Tailwind CSS para estilização
 - Renderização de Markdown com sanitização
 - Armazenamento baseado em arquivos via `/public/brags/*.json`
 - Implantado na Vercel
@@ -42,7 +46,9 @@ Construído com **Next.js 14** utilizando o App Router e seguindo a metodologia 
 
 ```
 /app
-  page.tsx                   ← Página inicial
+  globals.css                ← Estilos globais
+  layout.tsx                 ← Layout com fonte Inter
+  page.tsx                   ← Landing page elegante e minimalista
   not-found.tsx              ← Página 404 personalizada
   /user/[id]/page.tsx        ← Visualizador de Brag
   /api/build/route.ts        ← Aceita JSON brag do bot
@@ -87,6 +93,18 @@ Notifica o bot que um link está pronto.
   "url": "https://bragdocument.vercel.app/user/123456789"
 }
 ```
+
+---
+
+## 🎨 Design
+
+A landing page foi projetada seguindo princípios minimalistas e elegantes:
+
+- Cores claras e escuras adaptadas via modo do sistema
+- Tipografia limpa usando a fonte Inter do Google Fonts
+- Animações sutis para melhorar a experiência do usuário
+- Layout centrado e espaçado para melhor legibilidade
+- CTA principal direcionando para o bot do Telegram
 
 ---
 

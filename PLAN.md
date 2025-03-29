@@ -1,20 +1,22 @@
 # 🧠 Technical Plan — Bragdocument (Webapp Viewer for Bragfy)
 
-This document outlines the implementation strategy for the `bragdocument` webapp, built entirely using **Cursor + Claude 3.7** (Craudinho), following the **Vibe Coding** methodology.
+Este documento descreve a estratégia de implementação para o webapp `bragdocument`, construído inteiramente usando **Cursor + Claude 3.7** (Craudinho), seguindo a metodologia **Vibe Coding**.
 
-We prioritize:
+**Produção:** [https://bragdocument.vercel.app](https://bragdocument.vercel.app)
 
-- **UX**: User Experience
-- **DX**: Developer Experience
-- **AX**: Assistant Experience
+Priorizamos:
+
+- **UX**: Experiência do Usuário
+- **DX**: Experiência do Desenvolvedor
+- **AX**: Experiência do Assistente
 
 ---
 
-## 🎯 Goals
+## 🎯 Objetivos
 
-1. Serve a **clean institutional landing page**
-2. Host and render **static brag document pages** for users
-3. Integrate with the Bragfy Telegram bot to receive and publish brag documents via API
+1. Servir uma **landing page institucional elegante e minimalista** (inspirada no resend.com)
+2. Hospedar e renderizar **páginas estáticas de brag documents** para usuários
+3. Integrar com o bot Bragfy do Telegram para receber e publicar brag documents via API
 
 ---
 
@@ -22,93 +24,114 @@ We prioritize:
 
 - **Next.js 14** (App Router)
 - **TypeScript**
+- **Tailwind CSS**
+- **Fonte Inter** do Google Fonts
 - **Vercel deployment**
-- No authentication, no database
-- Brag documents stored as `.json` files in `/brags`
-- Markdown rendered with sanitation
+- Sem autenticação, sem banco de dados
+- Brag documents armazenados como arquivos `.json` em `/brags`
+- Markdown renderizado com sanitização
 
 ---
 
-## 🔄 Integration Flow
+## 🔄 Fluxo de Integração
 
-1. The user types “gerar link” in the Telegram bot
-2. The bot generates the Brag Document (in Markdown)
-3. The bot sends a `POST /api/build` request to the webapp with:
+1. O usuário digita "gerar link" no bot do Telegram
+2. O bot gera o Brag Document (em Markdown)
+3. O bot envia uma requisição `POST /api/build` para o webapp com:
    - `userId` (Telegram)
    - `markdown`
    - `period` (1d, 7d, 30d)
    - `timestamp`
-4. The webapp saves this as `/brags/{userId}.json`
-5. The page `/user/{userId}` renders it statically
-6. The webapp sends a `POST /api/link-ready` to the bot:
+4. O webapp salva isso como `/brags/{userId}.json`
+5. A página `/user/{userId}` renderiza estaticamente
+6. O webapp envia um `POST /api/link-ready` para o bot:
    - `{ userId, url }`
-7. The bot replies to the user with:
+7. O bot responde ao usuário com:
    `Seu Brag Document está pronto! ✨ 🔗 {url}`
 
 ---
 
-## ⚙️ Rendering Strategy
+## ⚙️ Estratégia de Renderização
 
-**Strategy C: File-based rebuild on demand**
+**Estratégia C: Reconstrução baseada em arquivos sob demanda**
 
-- `/api/build` writes the file to disk
-- `/user/[id]` loads the file dynamically
-- No ISR or SSG needed
-- Extremely simple and reliable
+- `/api/build` escreve o arquivo no disco
+- `/user/[id]` carrega o arquivo dinamicamente
+- Não é necessário ISR ou SSG
+- Extremamente simples e confiável
 
 ---
 
-## 🗂️ File Structure
+## 🎨 Design Atual
+
+- Landing page minimalista e elegante inspirada no [resend.com](https://resend.com)
+- Tema claro/escuro baseado na preferência do sistema
+- Animações sutis para melhorar a experiência do usuário
+- Fonte Inter do Google para tipografia limpa e legível
+- Layout centrado com espaçamento amplo
+- CTA principal direcionando para o bot do Telegram
+
+---
+
+## 🗂️ Estrutura de Arquivos Atual
 
 ```
 /app
-  page.tsx                 ← Landing page
-  /user/[id]/page.tsx      ← Brag page
-  /api/build/route.ts      ← Bot sends Brag Document
-  /api/link-ready/route.ts ← Notify bot when ready
-/brags
-  123456789.json           ← Brag document by user
+  globals.css                ← Estilos globais
+  layout.tsx                 ← Layout com fonte Inter
+  page.tsx                   ← Landing page elegante
+  /user/[id]/page.tsx        ← Página do Brag
+  /api/build/route.ts        ← Bot envia Brag Document
+  /api/link-ready/route.ts   ← Notifica o bot quando pronto
+/lib
+  bragUtils.ts               ← Utilitários para brags
 /public
+  /brags
+    123456789.json           ← Brag document por usuário
   favicon.ico
   social-banner.png
 ```
 
 ---
 
-## ✅ Development Steps
+## ✅ Status Atual
 
-- [ ] Scaffold Next.js 14 project with TypeScript
-- [ ] Build landing page at `/`
-- [ ] Implement `/api/build` to receive brag data from the bot
-- [ ] Save brag JSON in `/brags/{userId}.json`
-- [ ] Render brag pages from JSON in `/user/[id]`
-- [ ] Sanitize and render markdown
-- [ ] Add `/api/link-ready` to notify the bot
-- [ ] Test full flow locally and on Vercel
-
----
-
-## 🧠 Craudinho Guidelines
-
-- Do not use Server Actions
-- Do not use a database
-- Read/write brag files using `fs/promises`
-- Keep code modular and minimal
-- Markdown must be sanitized
-- Follow this PLAN strictly — do not invent behavior
+- [x] Scaffold do projeto Next.js 14 com TypeScript
+- [x] Landing page redesenhada com estética minimalista inspirada no resend.com
+- [x] Landing page totalmente responsiva com animações sutis
+- [x] Estilos globais com suporte a tema claro/escuro
+- [x] Implantação na Vercel
+- [x] Estrutura de arquivos organizada para o App Router
+- [ ] Implementar `/api/build` para receber dados de brag do bot
+- [ ] Salvar JSON de brag em `/brags/{userId}.json`
+- [ ] Renderizar páginas de brag a partir de JSON em `/user/[id]`
+- [ ] Sanitizar e renderizar markdown
+- [ ] Adicionar `/api/link-ready` para notificar o bot
+- [ ] Testar fluxo completo localmente e na Vercel
 
 ---
 
-## 🔐 Security
+## 🧠 Diretrizes Craudinho
 
-- Only the bot can POST to `/api/build`
-- No private user data
-- Markdown is sanitized to avoid XSS
+- Não usar Server Actions
+- Não usar banco de dados
+- Ler/escrever arquivos de brag usando `fs/promises`
+- Manter código modular e mínimo
+- Markdown deve ser sanitizado
+- Seguir este PLANO estritamente — não inventar comportamento
+
+---
+
+## 🔐 Segurança
+
+- Apenas o bot pode fazer POST para `/api/build`
+- Sem dados privados de usuário
+- Markdown é sanitizado para evitar XSS
 
 ---
 
 ## 🌍 Deployment
 
-- Deployed on Vercel
-- Brag pages live at:  
+- Implantado na Vercel
+- Páginas de brag disponíveis em:  
   `https://bragdocument.vercel.app/user/{userId}`
