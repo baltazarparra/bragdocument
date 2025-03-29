@@ -21,9 +21,8 @@ export interface BragDocument {
 export function sanitizeMarkdown(markdown: string): string {
   // Converte markdown para HTML
   const rawHtml = marked.parse(markdown);
-
   // Sanitiza o HTML para prevenir XSS
-  return DOMPurify.sanitize(rawHtml, {
+  return DOMPurify.sanitize(rawHtml.toString(), {
     ALLOWED_TAGS: [
       "h1",
       "h2",
